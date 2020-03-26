@@ -1,0 +1,27 @@
+describe("Testing form and validation", function() {
+  beforeEach(function() {
+    cy.visit("http://localhost:3000/")
+  })
+  it("Adds tests to inputs and submit", () => {
+    cy.get("input[name='name']")
+      .type("Testing")
+      .should("have.value", "Testing")
+    cy.get("input[name='email']")
+      .type("test@test.com")
+      .should("have.value", "test@test.com")
+    cy.get("input[name='password']")
+      .type("test")
+      .should("have.value", "test")
+    cy.get("input[name='tos']").check()
+    .should("be.checked")
+    cy.get("button[name='submit-btn']").click()
+  })
+  it("Checks validation message on invalid input", () => {
+    cy.get("input[name='name']").type('q{backspace}')
+    cy.get("input[name='email']").type('q{backspace}')
+    cy.get("input[name='password']").type('q{backspace}')
+    cy.get("input[name='tos']").check().uncheck()
+    cy.get("input[name='email']").type('qqq')
+    cy.get("button[name='submit-btn']").should('be.disabled')
+  })
+})

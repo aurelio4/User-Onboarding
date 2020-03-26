@@ -36,7 +36,7 @@ function Form({ users }) {
   const validateChange = e => {
     yup
       .reach(formSchema, e.target.name)
-      .validate(e.target.value)
+      .validate(e.target.name === "tos" ? e.target.checked : e.target.value)
       .then(valid => {
         setErrors({
           ...errors, [e.target.name]: ""
@@ -99,7 +99,7 @@ function Form({ users }) {
       </label>
       <pre>{JSON.stringify(postReq.data, null, 2)}</pre>
       <br />
-      <button disabled={buttonDisabled}>Submit</button>
+      <button name="submit-btn" disabled={buttonDisabled}>Submit</button>
     </form>
 
     {users.map(user => {
